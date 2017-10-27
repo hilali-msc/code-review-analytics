@@ -1,18 +1,24 @@
 package com.intact.soa.api;
 
+import java.time.Duration;
+import java.time.Year;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import org.kohsuke.github.GHCommit;
-import org.kohsuke.github.GHCommitComment;
 import org.kohsuke.github.GHCommit.File;
+import org.springframework.core.env.SystemEnvironmentPropertySource;
+import org.kohsuke.github.GHCommitComment;
 import org.kohsuke.github.GHRepository;
 import org.kohsuke.github.GHUser;
 import org.kohsuke.github.GitHub;
 import org.kohsuke.github.PagedIterable;
 
 import com.intact.soa.rest.model.Commit;
+import com.intact.soa.rest.model.GithubMapper;
 
 public class Main {
 
@@ -24,8 +30,13 @@ public class Main {
 	}
 
 	private static void listFiles(GitHub gitHub) throws Exception {
-		GHRepository repo = gitHub.getRepository("iluwatar/java-design-patterns");
-		PagedIterable<GHCommit> commits = repo.queryCommits().since(new Date(2016, 10, 21)).list();
+		GHRepository repo = gitHub.getRepository("spring-projects/spring-boot");
+		
+		
+		Date thisYearMinus4 = new Date((Calendar.getInstance().getTime()).toInstant().minus(Duration.of(4*365L, ChronoUnit.valueOf("DAYS")) ).toEpochMilli());
+		PagedIterable<GHCommit> commits = repo.queryCommits().since(thisYearMinus4).list();
+		
+		System.out.println("Nb commits : "+commits.asSet().size());
 
 		String fileName = null;
 		StringBuilder buffer = new StringBuilder("");
@@ -40,52 +51,10 @@ public class Main {
 
 		PagedIterable<GHCommitComment> iterableComments = null;
 		for (GHCommit commit : commits) {
-
-			userCommiter = commit.getCommitter();
-
-			filesByCommit = commit.getFiles();
-
-			for (File file : filesByCommit) {
-				fileName = file.getFileName();
-
-				if (fileName.contains(".java")) {
-					buffer.append(fileName);
-					buffer.append(" ");
-				}
-			}
-
-			if (!buffer.toString().isEmpty()) {
-				
-				currentCommit = new Commit();
-				
-				currentCommit.setId(commit.getSHA1());
-				iterableComments = commit.listComments();
-				
-				StringBuilder bufferComments = new StringBuilder("");
-				
-				for(GHCommitComment comment:iterableComments)
-				{
-					bufferComments.append(comment.getBody());
-					bufferComments.append(" ");
-				}
-				
-				currentCommit.setMessage(bufferComments.toString());
-				count++;
-				if (null != userCommiter) {
-					
-					currentCommit.setCommiterName(userCommiter.getName());
-					currentCommit.setCommiterEmail(userCommiter.getEmail());
-
-				}
-				currentCommit.setFiles(buffer.toString().trim());
-				
-				currentCommit.setDate(commit.getCommitDate().toString());
-//				currentCommit.setType(commit.getLastStatus().getDescription());
-				
+				currentCommit = GithubMapper.buildCommit(commit);				
 				rawCommits.add(currentCommit);
-			}
 
-			if (count > 30) {
+			if (count++ > 5) {
 				break;
 			}
 
