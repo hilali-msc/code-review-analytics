@@ -1,19 +1,16 @@
 package com.intact.soa.api;
 
+import java.io.File;
 import java.time.Duration;
-import java.time.Year;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.kohsuke.github.GHCommit;
-import org.kohsuke.github.GHCommit.File;
-import org.springframework.core.env.SystemEnvironmentPropertySource;
-import org.kohsuke.github.GHCommitComment;
 import org.kohsuke.github.GHRepository;
-import org.kohsuke.github.GHUser;
 import org.kohsuke.github.GitHub;
 import org.kohsuke.github.PagedIterable;
 
@@ -38,32 +35,30 @@ public class Main {
 		
 		System.out.println("Nb commits : "+commits.asSet().size());
 
-		String fileName = null;
-		StringBuilder buffer = new StringBuilder("");
-
-		GHUser userCommiter = null;
-		List<File> filesByCommit = null;
 		Commit currentCommit = null;
 		
 		List<Commit> rawCommits = new ArrayList<Commit>();
 
-		int count = 0;
+		File outputFile = new File("C:\\dev\\report\\spring-boot-commits.json");
 
-		PagedIterable<GHCommitComment> iterableComments = null;
 		for (GHCommit commit : commits) {
-				currentCommit = GithubMapper.buildCommit(commit);				
+				currentCommit = GithubMapper.buildCommit(commit);
+				
+				if (null == currentCommit)
+				{
+					continue;
+				}
+				
+				FileUtils.writeStringToFile(outputFile,currentCommit.toString());
+				FileUtils.writeStringToFile(outputFile,"\n");
 				rawCommits.add(currentCommit);
-
-			if (count++ > 5) {
-				break;
-			}
 
 		}
 		
-		for(Commit rawCommit:rawCommits)
-		{
-			System.out.println(rawCommit);
-		}
+//		for(Commit rawCommit:rawCommits)
+//		{
+//			System.out.println(rawCommit);
+//		}
 	}
 
 }

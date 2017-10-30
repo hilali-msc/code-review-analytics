@@ -4,9 +4,7 @@ import java.util.List;
 
 import org.kohsuke.github.GHCommit;
 import org.kohsuke.github.GHCommit.File;
-import org.kohsuke.github.GHCommitComment;
 import org.kohsuke.github.GHUser;
-import org.kohsuke.github.PagedIterable;
 
 public class GithubMapper {
 	
@@ -24,8 +22,6 @@ public class GithubMapper {
 
 		GHUser userCommiter = null;
 		List<File> filesByCommit = null;
-		
-		PagedIterable<GHCommitComment> iterableComments = null;
 		
 		userCommiter = ghCommit.getCommitter();
 
