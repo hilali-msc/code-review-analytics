@@ -1,4 +1,4 @@
-package com.intact.soa.rest;
+package com.nostrasoft.da.rest;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
