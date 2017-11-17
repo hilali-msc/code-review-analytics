@@ -1,6 +1,14 @@
 package com.nostrasoft.da.rest;
 
 import static graphql.schema.idl.RuntimeWiring.newRuntimeWiring;
+import graphql.ExecutionResult;
+import graphql.GraphQL;
+import graphql.schema.GraphQLSchema;
+import graphql.schema.StaticDataFetcher;
+import graphql.schema.idl.RuntimeWiring;
+import graphql.schema.idl.SchemaGenerator;
+import graphql.schema.idl.SchemaParser;
+import graphql.schema.idl.TypeDefinitionRegistry;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -13,21 +21,12 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.WinHttpClients;
 
-import graphql.ExecutionResult;
-import graphql.GraphQL;
-import graphql.schema.GraphQLSchema;
-import graphql.schema.StaticDataFetcher;
-import graphql.schema.idl.RuntimeWiring;
-import graphql.schema.idl.SchemaGenerator;
-import graphql.schema.idl.SchemaParser;
-import graphql.schema.idl.TypeDefinitionRegistry;
-
-public class Main {
+public class GraphQLTest {
 
 	private static final String GITHUB_GRAPHQL_URL = "https://api.github.com/graphql";
 	private static final String GITHUB_MY_TOKEN = "0a5cb3ada3ee46353925eca50f7717c3f4823b24";
 
-	private Main() {
+	private GraphQLTest() {
 		if (!WinHttpClients.isWinAuthAvailable()) {
 			throw new IllegalStateException("Integrated Win auth is not supported!!!");
 		}
