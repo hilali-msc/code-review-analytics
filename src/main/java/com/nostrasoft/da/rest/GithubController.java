@@ -24,20 +24,30 @@ import com.nostrasoft.da.rest.model.GithubMapper;
 @EnableAutoConfiguration
 public class GithubController {
 
-	@Autowired
-	private GitHub hub;
+	private final GitHub hub;
 
-	@RequestMapping("/github-da-rest")
+    @Autowired
+    public GithubController(GitHub hub) {
+        this.hub = hub;
+    }
+
+    @RequestMapping("/github-da-rest")
 	String home() {
 		return "<B>GitHub Data Analytics Rest Tools, the way you get it !</B>";
 	}
 
-	@RequestMapping(value = "/github-rest/analytics")
+    @RequestMapping(value = "/github-rest/analytics")
 	public Commits services(
-			@RequestParam(value = "repository", required = true) String repository,
-			@RequestParam(value = "owner", required = true) String owner)
+			@RequestParam String repository,
+			@RequestParam String owner)
 			throws IOException {
-		GHRepository repo = hub.getRepository(repository + "/" + owner);
+
+        GHRepository repo = hub.getRepository(repository + "/" + owner);
+
+		if (null == repo)
+		{
+			return null;
+		}
 
 		Date thisYearMinus4 = new Date((Calendar.getInstance().getTime())
 				.toInstant()
@@ -46,7 +56,7 @@ public class GithubController {
 		PagedIterable<GHCommit> rawCommits = repo.queryCommits()
 				.since(thisYearMinus4).list();
 
-		Commit currentCommit = null;
+		Commit currentCommit;
 
 		Commits commits = new Commits();
 
@@ -63,4 +73,21 @@ public class GithubController {
 		return commits;
 
 	}
+
+    @RequestMapping(value = "/github-rest/notify")
+    public String notify(
+            @RequestParam String repository,
+            @RequestParam String owner)
+            throws IOException {
+        GHRepository repo = hub.getRepository(repository + "/" + owner);
+
+        if (null == repo)
+        {
+            return "Not valid Github Repository!";
+        }
+
+
+        return owner + " is the owner of Github Repository " + repository;
+
+    }
 }
