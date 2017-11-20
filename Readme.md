@@ -6,7 +6,7 @@ It suppose that you are using oauth authentication to Github (see https://develo
 
 For the R processing, we have used JRI :
 
-http://www.rforge.net/JRI/index.html
+http://www.rforge.net/JRI/index.html (Use of https://cran.r-project.org/web/packages/arules/arules.pdf)
 
 The tool is implemented as a micro-service, and has as customer, a chrome extension : <Br>
 
