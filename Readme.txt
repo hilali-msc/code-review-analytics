@@ -1,7 +1,5 @@
-```html
-
 The project uses a library : 
-
+```html
 <a href="https://github.com/kohsuke/github-api">https://github.com/kohsuke/github-api</a> to use Github Rest API
 
 It suppose that you are using oauth authentication to Github (see https://developer.github.com/v3/oauth_authorizations/)
