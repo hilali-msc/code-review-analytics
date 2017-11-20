@@ -38,11 +38,10 @@ public class GithubController {
 
     @RequestMapping(value = "/github-rest/analytics")
 	public Commits services(
-			@RequestParam String repository,
-			@RequestParam String owner)
+			@RequestParam String ownerSlashrepository)
 			throws IOException {
 
-        GHRepository repo = hub.getRepository(repository + "/" + owner);
+        GHRepository repo = hub.getRepository(ownerSlashrepository);
 
 		if (null == repo)
 		{
@@ -76,10 +75,9 @@ public class GithubController {
 
     @RequestMapping(value = "/github-rest/notify")
     public String notify(
-            @RequestParam String repository,
-            @RequestParam String owner)
+            @RequestParam String ownerSlashrepository)
             throws IOException {
-        GHRepository repo = hub.getRepository(repository + "/" + owner);
+        GHRepository repo = hub.getRepository(ownerSlashrepository);
 
         if (null == repo)
         {
@@ -87,7 +85,7 @@ public class GithubController {
         }
 
 
-        return owner + " is the owner of Github Repository " + repository;
+        return ownerSlashrepository + " is the owner of Github Repository " ;
 
     }
 }
