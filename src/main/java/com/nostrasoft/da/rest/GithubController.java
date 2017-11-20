@@ -12,6 +12,7 @@ import org.kohsuke.github.GitHub;
 import org.kohsuke.github.PagedIterable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,7 +37,7 @@ public class GithubController {
 		return "<B>GitHub Data Analytics Rest Tools, the way you get it !</B>";
 	}
 
-    @RequestMapping(value = "/github-rest/analytics")
+    @PostMapping(value = "/github-rest/analytics")
 	public Commits services(
 			@RequestParam String ownerSlashrepository)
 			throws IOException {
@@ -73,7 +74,7 @@ public class GithubController {
 
 	}
 
-    @RequestMapping(value = "/github-rest/notify")
+    @PostMapping(value = "/github-rest/notify")
     public String notify(
             @RequestParam String ownerSlashrepository)
             throws IOException {
