@@ -8,6 +8,8 @@ import org.kohsuke.github.GHCommit.File;
 import org.kohsuke.github.GHUser;
 
 public class GithubMapper {
+	
+	GithubMapper() {}
 
 	public static Commit buildCommit(GHCommit ghCommit) throws IOException {
 		Commit commit = null;
@@ -25,6 +27,11 @@ public class GithubMapper {
 		userCommiter = ghCommit.getCommitter();
 
 		filesByCommit = ghCommit.getFiles();
+		
+		if ((null == filesByCommit) || (filesByCommit.isEmpty()) || (filesByCommit.size()>=100))
+		{
+			return null;
+		}
 
 		for (File file : filesByCommit) {
 			fileName = file.getFileName();

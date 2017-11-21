@@ -1,9 +1,6 @@
 package com.nostrasoft.da.rest;
 
 import java.io.IOException;
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
-import java.util.Calendar;
 import java.util.Date;
 
 import org.kohsuke.github.GHCommit;
@@ -20,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nostrasoft.da.rest.model.Commit;
 import com.nostrasoft.da.rest.model.Commits;
 import com.nostrasoft.da.rest.model.GithubMapper;
+import com.nostrasoft.da.rest.util.DateUtils;
 
 @RestController
 @EnableAutoConfiguration
@@ -49,10 +47,8 @@ public class GithubController {
 			return null;
 		}
 
-		Date thisYearMinus4 = new Date((Calendar.getInstance().getTime())
-				.toInstant()
-				.minus(Duration.of(4 * 365L, ChronoUnit.valueOf("DAYS")))
-				.toEpochMilli());
+		Date thisYearMinus4 = DateUtils.getDate4YearsBeforeToday();
+		
 		PagedIterable<GHCommit> rawCommits = repo.queryCommits()
 				.since(thisYearMinus4).list();
 

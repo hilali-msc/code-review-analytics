@@ -12,4 +12,10 @@ public class GithubConfig {
 	public GitHub githubRepository() throws IOException {
 		return GitHub.connect();
 	}
+	
+	@Bean
+	public GithubMapper getGithubMapper()
+	{
+		return new GithubMapper();
+	}
 }
