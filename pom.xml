@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.nostrasoft.analytics</groupId>
-	<artifactId>github-data-analytics</artifactId>
+	<artifactId>code-review-analytics</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
@@ -40,12 +40,7 @@
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.7</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.graphql-java/graphql-java -->
-		<dependency>
-			<groupId>com.graphql-java</groupId>
-			<artifactId>graphql-java</artifactId>
-			<version>5.0</version>
-		</dependency>
+
 		<dependency>
 			<groupId>com.github.lucarosellini.rJava</groupId>
 			<artifactId>JRI</artifactId>
@@ -58,19 +53,14 @@
 		</dependency>
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpcore-nio</artifactId>
-			<version>4.4.4</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient-win</artifactId>
 			<version>4.5.1</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.kohsuke/github-api -->
+		<!-- https://github.com/uwolfer/gerrit-rest-java-client.git -->
 		<dependency>
-			<groupId>org.kohsuke</groupId>
-			<artifactId>github-api</artifactId>
-			<version>1.89</version>
+		    <groupId>com.urswolfer.gerrit.client.rest</groupId>
+		    <artifactId>gerrit-rest-java-client</artifactId>
+		    <version>0.8.13</version>
 		</dependency>
 
 		<dependency>
