@@ -11,3 +11,9 @@ http://www.rforge.net/JRI/index.html (Use of https://cran.r-project.org/web/pack
 The tool is implemented as a micro-service, and has as customer, a chrome extension : <Br>
 
 https://github.com/NostraSoft/github-analyse-this
+
+Download :
+https://mvnrepository.com/artifact/com.urswolfer.gerrit.client.rest/gerrit-rest-java-client/0.8.13
+
+Then :
+mvn install:install-file -Dfile=gerrit-rest-java-client-0.8.13.jar -DgroupId=com.urswolfer.gerrit.client.rest -DartifactId=gerrit-rest-java-client -Dversion=0.8.13 -packaging=jar

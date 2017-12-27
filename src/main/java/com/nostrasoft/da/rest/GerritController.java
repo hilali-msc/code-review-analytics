@@ -11,8 +11,8 @@ public class GerritController {
 
    
 
-    @RequestMapping("/github-da-rest")
+    @RequestMapping("/code-review-da-rest")
 	String home() {
-		return "<B>GitHub Data Analytics Rest Tools, the way you get it !</B>";
+		return "<B>Code Review Gerrit based Data Analytics Rest Tools, the way you got it !</B>";
 	}
 }
