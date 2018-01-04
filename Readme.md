@@ -1,6 +1,6 @@
 The project uses a library : 
 
-https://github.com/kohsuke/github-api to use Github Rest API
+https://github.com/uwolfer/gerrit-rest-java-client to use Gerrit Rest API
 
 It suppose that you are using oauth authentication to Github (see https://developer.github.com/v3/oauth_authorizations/)
 
