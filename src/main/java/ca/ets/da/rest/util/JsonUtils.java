@@ -1,4 +1,4 @@
-package com.nostrasoft.da.rest.util;
+package ca.ets.da.rest.util;
 
 import java.io.ByteArrayOutputStream;
 

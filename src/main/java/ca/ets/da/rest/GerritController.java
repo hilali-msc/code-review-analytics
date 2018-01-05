@@ -1,4 +1,4 @@
-package com.nostrasoft.da.rest;
+package ca.ets.da.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;

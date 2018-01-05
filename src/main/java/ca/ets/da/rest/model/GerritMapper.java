@@ -1,4 +1,4 @@
-package com.nostrasoft.da.rest.model;
+package ca.ets.da.rest.model;
 
 public class GerritMapper {
 	

@@ -1,6 +1,6 @@
-package com.nostrasoft.da.rest.model;
+package ca.ets.da.rest.model;
 
-import com.nostrasoft.da.rest.util.JsonUtils;
+import ca.ets.da.rest.util.JsonUtils;
 
 public class Commit {
 	private static final String EMPTY = "";
