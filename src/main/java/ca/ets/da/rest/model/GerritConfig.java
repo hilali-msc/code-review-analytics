@@ -16,8 +16,9 @@ public class GerritConfig {
 		
 		GerritRestApiFactory gerritRestApiFactory = new GerritRestApiFactory();
 		
-		GerritAuthData.Basic authData = new GerritAuthData.Basic("https://android-review.googlesource.com", "user", "password");
+		GerritAuthData.Basic authData = new GerritAuthData.Basic("https://android-review.googlesource.com", "${gerrit.user}", "${gerrit.pwd}") ;
 		
+			
 		return gerritRestApiFactory.create(authData);
 	}
 	
