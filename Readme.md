@@ -17,3 +17,8 @@ https://mvnrepository.com/artifact/com.urswolfer.gerrit.client.rest/gerrit-rest-
 
 Then :
 mvn install:install-file -Dfile=gerrit-rest-java-client-0.8.13.jar -DgroupId=com.urswolfer.gerrit.client.rest -DartifactId=gerrit-rest-java-client -Dversion=0.8.13 -packaging=jar
+
+To get Info about server :
+https://review.typo3.org/Documentation/rest-api-config.html#get-info
+
+Example : https://android-review.googlesource.com/config/serverInfo

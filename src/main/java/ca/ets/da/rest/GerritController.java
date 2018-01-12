@@ -36,7 +36,7 @@ public class GerritController {
     	BinaryResult binaryContent = null;
     	FileOutputStream fio = null;
     	
-    	List<ChangeInfo> changesList = changes.query().get();
+    	List<ChangeInfo> changesList = changes.query("status:open").withLimit(10).get();
     	
     	Map<String, RevisionInfo> revisions = null;
     	
