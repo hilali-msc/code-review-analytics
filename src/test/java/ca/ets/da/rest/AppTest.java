@@ -1,4 +1,4 @@
-package com.nostrasoft.da.rest;
+package ca.ets.da.rest;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
