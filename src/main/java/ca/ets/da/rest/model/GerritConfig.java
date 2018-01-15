@@ -22,7 +22,7 @@ public class GerritConfig {
 		
 		GerritRestApiFactory gerritRestApiFactory = new GerritRestApiFactory();
 		
-		String gerritProjectUrl = env.getProperty("gerrit.projet.1.url");
+		String gerritProjectUrl = env.getProperty("gerrit.projet.eclipse.url");
 		String gerritProjectUser = env.getProperty("gerrit.projet.1.user");
 		String gerritProjectPwd = env.getProperty("gerrit.projet.1.pwd");
 		

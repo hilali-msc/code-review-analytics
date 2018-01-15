@@ -1,11 +1,9 @@
 package ca.ets.da.rest;
 
 import java.io.FileOutputStream;
-import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import javax.xml.bind.DatatypeConverter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -20,6 +18,8 @@ import com.google.gerrit.extensions.common.ChangeInfo;
 import com.google.gerrit.extensions.common.FileInfo;
 import com.google.gerrit.extensions.common.RevisionInfo;
 import com.google.gerrit.extensions.restapi.BinaryResult;
+
+import ca.ets.da.rest.util.FileCodecBase64;
 
 @RestController
 @EnableAutoConfiguration
@@ -40,7 +40,15 @@ public class GerritController {
     	
     	Changes changes = gerritApi.changes();
     	
-    	List<ChangeInfo> changesList = gerritApi.changes().query().withLimit(LIMIT_VALUE).get();
+//    	List<ChangeInfo> changesList = gerritApi.changes().query().withLimit(LIMIT_VALUE).get();
+    	
+    	List<ChangeInfo> changesList = new ArrayList<ChangeInfo>();
+    	
+    	ChangeInfo elementChange = new ChangeInfo();
+//    	elementChange.id = "toolchain%2Fjack~ub-jack~Id73b57b9a072d3dc3e8011b606f3c272d407ce2f";
+    	elementChange.id = "platform%2Feclipse.platform.ui~master~I5304fbf3034113b14fd8b8a8263ece3c6eaaf856";
+    	
+    	changesList.add(elementChange);
     	
     	ChangeApi changeApi = null;
     	RevisionApi revisionApi = null;
@@ -61,7 +69,10 @@ public class GerritController {
     	{
     		changeApi = changes.id(change.id);
     		
-    		revisionApi = changeApi.current();
+//    		revisionApi = changeApi.current();
+    		
+//    		revisionApi = changeApi.revision("8357718e1059df99e221a52c039af3016ca05323");
+    		revisionApi = changeApi.revision("966556a62c48f54a7b34127ca1ca52330028ed7b");
     		
     		if (null == revisionApi)
     		{
@@ -96,20 +107,28 @@ public class GerritController {
                 	{
                 		System.out.println(fileName);
                 		
-                		resultStr = binaryContent.asString();
-                		
-                		if (binaryContent.isBase64())
-                		{
-                			resultStr = new String(DatatypeConverter.parseBase64Binary(resultStr));
-                		}
+//                		resultStr = binaryContent.asString();
+//                		
+//                		if (binaryContent.isBase64())
+//                		{
+//                			resultStr = new String(DatatypeConverter.parseBase64Binary(resultStr));
+//                		}
                 		
                 		fileName =  fileId.substring(fileId.lastIndexOf("/")+1);
                 		
-                		fio =new FileOutputStream("C:\\Hilali\\Gerrit\\"+fileName);
+                    	fio = new FileOutputStream("C:\\Hilali\\Gerrit\\Encoded\\"+fileName);
                 		
-                		PrintWriter p = new PrintWriter(fio, true);
-                		p.print(resultStr);
-                    	fio.close();  
+                    	binaryContent.writeTo(fio);
+                    	fio.flush();
+                    	fio.close();                		
+                    	
+                    	FileCodecBase64.decode("C:\\Hilali\\Gerrit\\Encoded\\"+fileName, "C:\\Hilali\\Gerrit\\"+fileName);
+                    	
+//                		fio =new FileOutputStream("C:\\Hilali\\Gerrit\\"+fileName);
+//                		
+//                		PrintWriter p = new PrintWriter(fio, true);
+//                		p.print(resultStr);
+//                    	fio.close();  
                 	}                	
                 	 
                 	
