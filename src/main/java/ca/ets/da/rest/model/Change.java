@@ -11,7 +11,7 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table(name="t_change")
+@Table(schema="${gerrit.datasource.schema}",name="t_change")
 public class Change {
 	
 	//Unique id of changes in database : id

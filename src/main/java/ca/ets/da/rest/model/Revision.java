@@ -14,7 +14,7 @@ import javax.persistence.Table;
 //SELECT id, rev_Id, rev_changeId, rev_patchSetNum \
 //FROM t_revision
 @Entity
-@Table(name="t_revision")
+@Table(schema="${gerrit.datasource.schema}",name="t_revision")
 public class Revision {
 	
 	//Unique revision id in database : id
@@ -23,7 +23,7 @@ public class Revision {
 	private Integer id;
 	
 	//Commit id of revision : rev_Id
-	@Column(name="revId")
+	@Column(name="rev_Id")
 	private String revId;
 	
 	//Change that the revision belongs to : rev_changeId (FK)

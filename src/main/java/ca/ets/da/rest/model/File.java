@@ -13,7 +13,7 @@ import javax.persistence.Table;
  */
 
 @Entity
-@Table(name="t_file")
+@Table(schema="${gerrit.datasource.schema}",name="t_file")
 //SELECT f_fileName, f_revisionId \
 //FROM t_file
 public class File {

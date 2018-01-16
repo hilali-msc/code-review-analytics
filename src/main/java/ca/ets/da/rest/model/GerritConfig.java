@@ -22,9 +22,9 @@ public class GerritConfig {
 		
 		GerritRestApiFactory gerritRestApiFactory = new GerritRestApiFactory();
 		
-		String gerritProjectUrl = env.getProperty("gerrit.projet.eclipse.url");
-		String gerritProjectUser = env.getProperty("gerrit.projet.1.user");
-		String gerritProjectPwd = env.getProperty("gerrit.projet.1.pwd");
+		String gerritProjectUrl = env.getProperty("eclipse.gerrit.projet.url");
+		String gerritProjectUser = env.getProperty("eclipse.gerrit.user");
+		String gerritProjectPwd = env.getProperty("eclipse.gerrit.pwd");
 		
 		GerritAuthData.Basic authData = new GerritAuthData.Basic("https://"+gerritProjectUrl, gerritProjectUser, gerritProjectPwd,true) ;
 		return gerritRestApiFactory.create(authData);

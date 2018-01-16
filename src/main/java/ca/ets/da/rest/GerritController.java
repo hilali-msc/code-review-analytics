@@ -72,8 +72,9 @@ public class GerritController {
     	
     	ChangeInfo elementChange = new ChangeInfo();
 //    	elementChange.id = "toolchain%2Fjack~ub-jack~Id73b57b9a072d3dc3e8011b606f3c272d407ce2f";
-    	Change changeDB = changeService.getChangeById(2);
+    	Change changeDB = changeService.getChangeById(1);
 //    	elementChange.id = "platform%2Feclipse.platform.ui~master~I5304fbf3034113b14fd8b8a8263ece3c6eaaf856";
+//    	elementChange.id = "jgit%2Fjgit~master~I1a3cbd49a39b150a0d49b36d572da113ca83a786";
     	elementChange.id = changeDB.getChangeId();
     	
     	changesList.add(elementChange);
@@ -92,7 +93,9 @@ public class GerritController {
     	FileInfo file = null;
     	
     	String resultStr = null;
-    	Revision revisionDB = revisionService.getRevisionById(7);
+//    	Revision revisionDB = revisionService.getRevisionById(7);
+    	
+    	Iterable<Revision> revisionDBs = revisionService.listAllRevisionsByChangeId(1);
     	
     	for(ChangeInfo change : changesList)
     	{
@@ -102,81 +105,88 @@ public class GerritController {
     		
 //    		revisionApi = changeApi.revision("8357718e1059df99e221a52c039af3016ca05323");
 //    		revisionApi = changeApi.revision("966556a62c48f54a7b34127ca1ca52330028ed7b");
-    		revisionApi = changeApi.revision(revisionDB.getRevId());
     		
-    		if (null == revisionApi)
+    		
+    		for(Revision revisionDB:revisionDBs)
     		{
-    			continue;
-    		}
-    		
-    		files = revisionApi.files();
-    		
-    		if (null == files)
-    		{
-    			continue;
-    		}
-    		
-    		for(String fileId:files.keySet())
-    		{
-    			file = files.get(fileId);
-    			
-//    			System.out.println(fileId);
-    			
-    			try
-    			{
-                	binaryContent = revisionApi.file(fileId).content();
-                
-                	if ("text/x-gerrit-commit-message".equals(binaryContent.getContentType()))
-                	{
-                		continue;
-                	}
-                	
-                	fileName =  fileId.substring(fileId.lastIndexOf("/")+1);
-                	
-                	if ("text/x-java".equals(binaryContent.getContentType()))
-                	{
-                		System.out.println(fileName);
-                		
-//                		resultStr = binaryContent.asString();
-//                		
-//                		if (binaryContent.isBase64())
-//                		{
-//                			resultStr = new String(DatatypeConverter.parseBase64Binary(resultStr));
-//                		}
-                		
-                		fileName =  fileId.substring(fileId.lastIndexOf("/")+1);
-                		
-                    	fio = new FileOutputStream("C:\\Hilali\\Gerrit\\Encoded\\"+fileName);
-                		
-                    	binaryContent.writeTo(fio);
-                    	fio.flush();
-                    	fio.close();                		
+        		revisionApi = changeApi.revision(revisionDB.getRevId());
+        		
+        		if (null == revisionApi)
+        		{
+        			continue;
+        		}
+        		
+        		files = revisionApi.files();
+        		
+        		if (null == files)
+        		{
+        			continue;
+        		}
+        		
+        		for(String fileId:files.keySet())
+        		{
+        			file = files.get(fileId);
+        			
+//        			System.out.println(fileId);
+        			
+        			try
+        			{
+                    	binaryContent = revisionApi.file(fileId).content();
+                    
+                    	if ("text/x-gerrit-commit-message".equals(binaryContent.getContentType()))
+                    	{
+                    		continue;
+                    	}
                     	
-                    	FileCodecBase64.decode("C:\\Hilali\\Gerrit\\Encoded\\"+fileName, "C:\\Hilali\\Gerrit\\"+fileName);
+                    	fileName =  fileId.substring(fileId.lastIndexOf("/")+1);
                     	
-//                		fio =new FileOutputStream("C:\\Hilali\\Gerrit\\"+fileName);
-//                		
-//                		PrintWriter p = new PrintWriter(fio, true);
-//                		p.print(resultStr);
-//                    	fio.close();  
-                	}                	
-                	 
-                	
-                	
-//                	fio = new FileOutputStream("C:\\Hilali\\Gerrit\\"+fileName);
-                	
-//                	binaryContent.writeTo(fio);
-//                	fio.flush();
-//                	fio.close();     				
-    			}
-    			catch(Exception e)
-    			{
-    				System.out.println(e.getMessage());
-    			}
-    			
-           			
+                    	if ("text/x-java".equals(binaryContent.getContentType()))
+                    	{
+                    		System.out.println(fileName);
+                    		
+//                    		resultStr = binaryContent.asString();
+//                    		
+//                    		if (binaryContent.isBase64())
+//                    		{
+//                    			resultStr = new String(DatatypeConverter.parseBase64Binary(resultStr));
+//                    		}
+                    		
+                    		fileName =  fileId.substring(fileId.lastIndexOf("/")+1);
+                    		
+                        	fio = new FileOutputStream("C:\\Hilali\\Gerrit\\Encoded\\"+revisionDB.getRevNumberInChange()+fileName);
+                    		
+                        	binaryContent.writeTo(fio);
+                        	fio.flush();
+                        	fio.close();                		
+                        	
+                        	FileCodecBase64.decode("C:\\Hilali\\Gerrit\\Encoded\\"+revisionDB.getRevNumberInChange()+fileName, "C:\\Hilali\\Gerrit\\"+revisionDB.getRevNumberInChange()+fileName);
+                        	
+//                    		fio =new FileOutputStream("C:\\Hilali\\Gerrit\\"+fileName);
+//                    		
+//                    		PrintWriter p = new PrintWriter(fio, true);
+//                    		p.print(resultStr);
+//                        	fio.close();  
+                    	}                	
+                    	 
+                    	
+                    	
+//                    	fio = new FileOutputStream("C:\\Hilali\\Gerrit\\"+fileName);
+                    	
+//                    	binaryContent.writeTo(fio);
+//                    	fio.flush();
+//                    	fio.close();     				
+        			}
+        			catch(Exception e)
+        			{
+        				System.out.println(e.getMessage());
+        			}
+        			
+               			
+        		}
+        	}    			
     		}
-    	}
+    			
+
     	
 		return "<B>Code Review Gerrit based Data Analytics Rest Tools, the way you got it !</B>";
 	}
